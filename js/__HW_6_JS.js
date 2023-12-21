@@ -33,13 +33,16 @@ class MyString{
     return string;
   };
   ucWords(string){
-    string = this.string.split(' ');
-    console.log(string);
-
+    const words = this.string.split(' ');
+   for(let i=0; i<words.length; i++){
+     words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+   }
+   string = words.join(' ');
+   return string;
   };
 }
 
 const string = new MyString('мене звати дмитро')
 document.write(string.reverse() + '<br>'); // виведе: ортимд итавз енем
 document.write(string.ucFirst() + '<br>'); // виведе: Мене звати дмитро
-string.ucWords();
+document.write(string.ucWords() + '<br>'); // виведе: Мене Звати Дмитро
