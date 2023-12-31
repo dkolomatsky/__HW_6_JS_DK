@@ -16,31 +16,21 @@
 
 // Не забувайте експериментувати та тестувати програму з різними вхідними даними для перевірки правильності роботи коду.
 
-class ProductBuilder {
-  static productsList = [];
-  static totalCost = 0;
-  constructor(name,price,quantity){ 
-    this.name = name;
-    this.price = price;
-    this.quantity = quantity;
-    ProductBuilder.productsList.push(this);
-    ProductBuilder.totalCost += this.calculatePrice();
-  }
-
-  calculatePrice () {
-    return this.price * this.quantity;
-  }
+const ProductBuilder = function (name,price,quantity){
+      this.name = name;
+      this.price = price;
+      this.quantity = quantity;
+      ProductBuilder.productsList = [];
+}
+ProductBuilder.prototype.calculatePrice = function (){
+  return this.price * this.quantity;
 }
 
-const product1 = new ProductBuilder('pear', 30.5, 100);
-const product2 = new ProductBuilder('pine-apple', 15, 10);
-const product3 = new ProductBuilder('banana', 35.7,4);
-
-
-
 function printBill (productsList) {
-  for (const product of ProductBuilder.productsList) {
+  let totalCost = 0;
+  for (const product of productsList) {
     const totalPrice = product.calculatePrice();
+    totalCost += totalPrice;
     console.log(`
     Продукт: ${product.name}
     Ціна за 1шт: ${product.price}
@@ -48,9 +38,15 @@ function printBill (productsList) {
     Вартість замовленого продукту: ${totalPrice.toFixed(2)}
     `);
   }
-  console.log(`Всього до сплати: ${ProductBuilder.totalCost.toFixed(2)}`)
+  console.log(`Всього до сплати: ${totalCost.toFixed(2)}`)
 }
-printBill();
+
+const product1 = new ProductBuilder('pear', 30.5, 100);
+const product2 = new ProductBuilder('pine-apple', 15, 10);
+const product3 = new ProductBuilder('banana', 35.7,4);
+ProductBuilder.productsList.push(product1, product2, product3);
+
+printBill(ProductBuilder.productsList);
 
 
 
